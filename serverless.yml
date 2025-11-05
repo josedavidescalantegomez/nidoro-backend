@@ -28,6 +28,7 @@ functions:
       - httpApi:
           path: /presupuesto
           method: get
+          cors: true
 
   createPresupuesto:
     handler: src/handlers/createPresupuesto.handler
@@ -35,6 +36,7 @@ functions:
       - httpApi:
           path: /presupuesto
           method: post
+          cors: true
 
   updatePresupuesto:
     handler: src/handlers/updatePresupuesto.handler
@@ -42,6 +44,7 @@ functions:
       - httpApi:
           path: /presupuesto/{id}
           method: put
+          cors: true
 
   deletePresupuesto:
     handler: src/handlers/deletePresupuesto.handler
@@ -49,6 +52,7 @@ functions:
       - httpApi:
           path: /presupuesto/{id}
           method: delete
+          cors: true
 
 plugins:
   - serverless-dotenv-plugin
