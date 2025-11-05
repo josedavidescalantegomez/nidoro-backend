@@ -16,10 +16,10 @@ exports.handler = async (event) => {
     // Esperamos: { title, amount, category, month, notes }
     const item = {
       id: uuidv4(),
-      title: body.title || 'sin título',
-      amount: body.amount || 0,
-      category: body.category || 'general',
-      month: body.month || (new Date().toISOString().slice(0,7)), // YYYY-MM
+      category: body.category || body.categoria || 'general',
+      description: body.description || body.descripcion || '',
+      month: body.month || body.mes || new Date().toISOString().slice(0, 7), // YYYY-MM
+      amount: body.amount || body.monto || 0,
       notes: body.notes || '',
       createdAt: new Date().toISOString()
     };
