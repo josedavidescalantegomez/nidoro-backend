@@ -29,4 +29,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           DYNAMO_TABLE: ${{ secrets.DYNAMO_TABLE }}
-        run: serverless deploy --stage prod
+        run: npx serverless deploy --stage prod
