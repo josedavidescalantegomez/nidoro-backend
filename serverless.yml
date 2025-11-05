@@ -1,5 +1,5 @@
 service: nidoro-backend
-frameworkVersion: '3'
+frameworkVersion: '>=3.0.0'
 useDotenv: true
 
 provider:
