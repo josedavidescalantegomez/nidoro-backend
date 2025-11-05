@@ -1,0 +1,81 @@
+service: nidoro-backend
+frameworkVersion: '3'
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  environment:
+    DYNAMO_TABLE: ${env:DYNAMO_TABLE}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - arn:aws:dynamodb:${self:provider.region}:*:table/${env:DYNAMO_TABLE}
+
+functions:
+  getPresupuesto:
+    handler: src/handlers/getPresupuesto.handler
+    events:
+      - httpApi:
+          path: /presupuesto
+          method: get
+
+  createPresupuesto:
+    handler: src/handlers/createPresupuesto.handler
+    events:
+      - httpApi:
+          path: /presupuesto
+          method: post
+
+  updatePresupuesto:
+    handler: src/handlers/updatePresupuesto.handler
+    events:
+      - httpApi:
+          path: /presupuesto/{id}
+          method: put
+
+  deletePresupuesto:
+    handler: src/handlers/deletePresupuesto.handler
+    events:
+      - httpApi:
+          path: /presupuesto/{id}
+          method: delete
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+
+resources:
+  Resources:
+    PresupuestoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:DYNAMO_TABLE}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: category
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: CategoryIndex
+            KeySchema:
+              - AttributeName: category
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+        BillingMode: PAY_PER_REQUEST

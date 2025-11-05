@@ -1,0 +1,23 @@
+{
+  "name": "nidoro-backend",
+  "version": "1.0.0",
+  "main": "src/handlers/getPresupuesto.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "serverless offline start",
+    "deploy": "serverless deploy --stage prod",
+    "deploy:dev": "serverless deploy --stage dev",
+    "remove": "serverless remove"
+  },
+  "keywords": [],
+  "author": "",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^4.0.2",
+    "serverless-offline": "^12.0.4"
+  }
+}
